@@ -77,6 +77,8 @@ a:hover {
 
 .nav {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 1.25rem;
   font-family: var(--font-display);
   font-size: 0.9rem;
@@ -352,6 +354,119 @@ a:hover {
   margin-top: 0.5rem;
   font-size: 0.9rem;
   color: var(--fog);
+}
+
+.about-hero {
+  display: grid;
+  gap: 2rem;
+  padding: 3.5rem 0 1rem;
+  align-items: center;
+  animation: rise 0.85s ease-out both;
+}
+
+@media (min-width: 800px) {
+  .about-hero {
+    grid-template-columns: min(280px, 32%) 1fr;
+    gap: 3rem;
+    padding-top: 4.5rem;
+  }
+}
+
+.about-photo {
+  width: min(100%, 280px);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 1.25rem;
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  justify-self: start;
+}
+
+.about-hero .eyebrow {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.about-hero h1 {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 7vw, 4.2rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.about-hero .lede {
+  margin: 0 0 0.25rem;
+  color: var(--fog);
+  max-width: 38rem;
+}
+
+.resume-block {
+  padding: 2.5rem 0 0.5rem;
+  border-top: 1px solid var(--line);
+  margin-top: 2.5rem;
+  animation: rise 0.8s ease-out 0.12s both;
+}
+
+.resume-block h2 {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 1.9rem);
+  letter-spacing: -0.02em;
+}
+
+.job {
+  margin-bottom: 2.25rem;
+}
+
+.job-head h3 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+}
+
+.job .meta,
+.plain-list .meta {
+  display: block;
+  margin: 0.15rem 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+.job p,
+.job li,
+.plain-list li {
+  color: var(--fog);
+}
+
+.job ul {
+  margin: 0.75rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.job li + li {
+  margin-top: 0.45rem;
+}
+
+.plain-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+}
+
+.plain-list strong {
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 600;
 }
 
 @keyframes rise {

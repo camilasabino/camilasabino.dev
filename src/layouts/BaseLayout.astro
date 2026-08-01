@@ -9,7 +9,7 @@ interface Props {
 
 const {
   title,
-  description = 'Portfolio de Camila Sabino — software, producto y proyectos como Blendify.',
+  description = 'Portfolio de Camila Sabino — software engineer, producto y proyectos como Blendify.',
   path = '/',
 } = Astro.props;
 
@@ -41,6 +41,12 @@ const canonical = new URL(path, site).toString();
           <a href="/#proyectos" aria-current={path.startsWith('/projects') ? 'page' : undefined}>
             Proyectos
           </a>
+          <a href="/sobre" aria-current={path === '/sobre' ? 'page' : undefined}>Sobre</a>
+          <a
+            href="https://www.linkedin.com/in/camilasabino/"
+            rel="noopener noreferrer"
+            target="_blank">LinkedIn</a
+          >
           <a href="https://github.com/camilasabino" rel="noopener noreferrer" target="_blank">
             GitHub
           </a>
@@ -55,6 +61,12 @@ const canonical = new URL(path, site).toString();
         <span>© {new Date().getFullYear()} Camila Sabino</span>
         <span>
           <a href="mailto:contacto@camilasabino.dev">contacto@camilasabino.dev</a>
+          ·
+          <a
+            href="https://www.linkedin.com/in/camilasabino/"
+            rel="noopener noreferrer"
+            target="_blank">LinkedIn</a
+          >
           ·
           <a href="https://github.com/camilasabino" rel="noopener noreferrer" target="_blank"
             >GitHub</a
