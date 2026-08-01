@@ -389,16 +389,6 @@ a:hover {
   border-color: currentColor;
 }
 
-.landing .btn-ghost {
-  border-color: color-mix(in srgb, var(--paper-2) 35%, transparent);
-  color: var(--paper-2);
-}
-
-.landing .btn-ghost:hover {
-  border-color: var(--paper-2);
-  color: var(--paper-2);
-}
-
 /* ——— Sections ——— */
 .section {
   padding: 4.5rem 0 2rem;
