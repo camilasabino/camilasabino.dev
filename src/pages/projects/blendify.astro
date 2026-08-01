@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Blendify — Camila Sabino"
+  description="Blendify: mixes de Spotify desde artistas, géneros o una semilla de descubrimiento."
+  path="/projects/blendify"
+>
+  <article>
+    <header class="project-hero">
+      <div class="kicker">
+        <img src="/projects/blendify/mark.svg" alt="" width="32" height="32" />
+        Proyecto
+      </div>
+      <h1>Blendify</h1>
+      <p class="lede">
+        Un workspace enfocado para crear mixes de Spotify: artistas, géneros curados, descubrimiento
+        vía Last.fm, publicación a tu cuenta y biblioteca propia.
+      </p>
+      <div class="cta-row">
+        <a
+          class="btn btn-primary"
+          href="https://github.com/camilasabino/Blendify"
+          rel="noopener noreferrer"
+          target="_blank">Código en GitHub</a
+        >
+        <a class="btn btn-ghost" href="/">Volver al inicio</a>
+      </div>
+    </header>
+
+    <div class="bleed">
+      <img
+        src="/projects/blendify/landing.webp"
+        alt="Pantalla de inicio de Blendify"
+        width="1920"
+        height="1080"
+      />
+    </div>
+
+    <div class="prose">
+      <h2>Qué hace</h2>
+      <p>
+        Blendify combina la API de Spotify con datos de descubrimiento de Last.fm para armar cuatro
+        tipos de playlist: Artist Mix, Genre Mix, Discover Artist y Discover Track. Cada generación
+        guarda una receta tipada (semillas, popularidad, orden y presupuesto de tracks).
+      </p>
+
+      <h2>Stack</h2>
+      <ul class="stack">
+        <li>TypeScript</li>
+        <li>React 19 + Vite</li>
+        <li>NestJS 11</li>
+        <li>PostgreSQL</li>
+        <li>Redis</li>
+        <li>Spotify Web API</li>
+        <li>Last.fm</li>
+      </ul>
+
+      <h2>Highlights</h2>
+      <ul>
+        <li>OAuth de Spotify con sesiones HTTP-only</li>
+        <li>Modos popular / balanced / rarities y ordenamiento por artista, título o random</li>
+        <li>Biblioteca local con sync hacia Spotify</li>
+        <li>UI en inglés, español e português (BR)</li>
+      </ul>
+
+      <h2>Capturas</h2>
+      <div class="gallery">
+        <figure>
+          <img
+            src="/projects/blendify/mix-artists.webp"
+            alt="Flujo de mezcla por artistas en Blendify"
+            width="1280"
+            height="720"
+          />
+          <figcaption>Artist Mix — combinar hasta 12 artistas</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="/projects/blendify/library.webp"
+            alt="Biblioteca de playlists en Blendify"
+            width="1280"
+            height="720"
+          />
+          <figcaption>Library — revisar y gestionar resultados</figcaption>
+        </figure>
+      </div>
+
+      <p style="margin-top: 2.5rem">
+        El despliegue en vivo de la app llega después. Por ahora el código y el diseño viven en
+        GitHub.
+      </p>
+    </div>
+  </article>
+</BaseLayout>

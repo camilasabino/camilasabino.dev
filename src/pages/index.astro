@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Camila Sabino" path="/">
+  <section class="hero">
+    <h1>Camila Sabino</h1>
+    <p class="lede">
+      Construyo producto de software de punta a punta — de la idea al deploy. Empiezo acá con
+      Blendify, un workspace para crear mixes de Spotify.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/projects/blendify">Ver Blendify</a>
+      <a
+        class="btn btn-ghost"
+        href="https://github.com/camilasabino"
+        rel="noopener noreferrer"
+        target="_blank">GitHub</a
+      >
+    </div>
+  </section>
+
+  <section class="section" id="proyectos">
+    <h2>Proyectos</h2>
+    <p>Selección de trabajo reciente. Más cosas irán apareciendo acá.</p>
+
+    <a class="project-link" href="/projects/blendify">
+      <span class="label">Producto · Full stack</span>
+      <h3>Blendify</h3>
+      <p>
+        Generá playlists de Spotify a partir de artistas, géneros o una pista semilla — con
+        descubrimiento Last.fm, biblioteca y modos de popularidad.
+      </p>
+    </a>
+  </section>
+</BaseLayout>
