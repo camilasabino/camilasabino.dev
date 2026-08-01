@@ -4,32 +4,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="Camila Sabino" path="/" home>
   <section class="landing">
-    <div class="landing-panel">
-      <p class="landing-meta">Software engineer · Buenos Aires</p>
-      <h1>Camila Sabino</h1>
-      <p class="lede">
-        Diseño y construyo sistemas de producto que aguantan escala: pagos, APIs y arquitectura
-        distribuida — de punta a punta.
-      </p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="/#proyectos">Ver trabajo</a>
-        <a class="btn btn-ghost" href="/sobre">Sobre mí</a>
-      </div>
+    <div class="landing-bg" aria-hidden="true">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+      <span class="blob blob-c"></span>
+      <span class="grid-fade"></span>
     </div>
 
-    <a class="landing-stage" href="/projects/blendify" aria-label="Ver Blendify">
-      <img
-        src="/projects/blendify/landing.webp"
-        alt="Captura de Blendify"
-        width="1600"
-        height="1000"
-        fetchpriority="high"
-      />
-      <span class="landing-stage-caption">
-        <span>Proyecto destacado</span>
-        <strong>Blendify →</strong>
-      </span>
-    </a>
+    <div class="landing-frame">
+      <div class="landing-copy">
+        <p class="landing-meta">Software engineer · Buenos Aires</p>
+        <h1>Camila Sabino</h1>
+        <p class="lede">
+          Diseño y construyo sistemas de producto que aguantan escala: pagos, APIs y arquitectura
+          distribuida — de punta a punta.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="/#proyectos">Ver trabajo</a>
+          <a class="btn btn-ghost" href="/sobre">Sobre mí</a>
+        </div>
+      </div>
+
+      <figure class="landing-photo">
+        <img
+          src="/images/camila.jpg"
+          alt="Camila Sabino"
+          width="720"
+          height="900"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
   </section>
 
   <div class="shell">
@@ -42,8 +47,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <a class="project-feature" href="/projects/blendify">
         <div class="project-feature-media">
           <img
-            src="/projects/blendify/mix-artists.webp"
-            alt="Artist Mix en Blendify"
+            src="/projects/blendify/landing.webp"
+            alt="Vista de Blendify"
             width="1280"
             height="800"
           />
