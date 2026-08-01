@@ -1,21 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700;800&family=Newsreader:opsz,ital,wght@6..72,400;6..72,500;6..72,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Newsreader:opsz,ital,wght@6..72,400;6..72,500;6..72,600&display=swap');
 
 :root {
-  --paper: #e5e8ec;
-  --paper-2: #eef1f4;
-  --ink: #14171c;
-  --ink-soft: #2c323a;
-  --mute: #5c6570;
-  --line: rgba(20, 23, 28, 0.12);
-  --accent: #c8321b;
-  --accent-deep: #9e2414;
-  --band: #1a3d36;
-  --band-text: #e7f2ef;
-  --font-display: 'Familjen Grotesk', system-ui, sans-serif;
+  --paper: #e7ece8;
+  --paper-2: #f0f4f1;
+  --ink: #101612;
+  --ink-soft: #2a332d;
+  --mute: #5a665f;
+  --line: rgba(16, 22, 18, 0.12);
+  --accent: #e23b1e;
+  --accent-deep: #b52c14;
+  --band: #12352e;
+  --band-text: #e8f3ef;
+  --panel: #0d221d;
+  --panel-text: #f3f7f4;
+  --font-display: 'Syne', system-ui, sans-serif;
   --font-body: 'Newsreader', Georgia, serif;
-  --max: 72rem;
-  --header-h: 4.25rem;
-  --radius: 0.35rem;
+  --max: 74rem;
+  --header-h: 4.5rem;
+  --radius: 0.4rem;
 }
 
 *,
@@ -86,13 +88,29 @@ a:hover {
   margin-inline: auto;
   background: transparent;
   backdrop-filter: none;
+  color: var(--panel-text);
+}
+
+.page-home .brand,
+.page-home .nav a {
+  color: color-mix(in srgb, var(--panel-text) 88%, transparent);
+}
+
+.page-home .nav a:hover,
+.page-home .nav a[aria-current='page'],
+.page-home .brand:hover {
+  color: #fff;
+}
+
+.page-home .nav a::after {
+  background: var(--accent);
 }
 
 .brand {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.95rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   text-decoration: none;
 }
@@ -101,10 +119,10 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.35rem 1.35rem;
+  gap: 0.35rem 1.5rem;
   font-family: var(--font-display);
-  font-size: 0.92rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
 }
 
 .nav a {
@@ -152,74 +170,171 @@ a:hover {
 
 /* ——— Landing ——— */
 .landing {
-  display: flex;
-  align-items: center;
-  min-height: 100svh;
-  background:
-    radial-gradient(ellipse 70% 55% at 85% 20%, rgba(200, 50, 27, 0.22), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 10% 90%, rgba(26, 61, 54, 0.35), transparent 50%),
-    var(--ink);
-  color: var(--paper-2);
-}
-
-.landing-inner {
-  width: min(100% - 2.5rem, var(--max));
-  margin-inline: auto;
   display: grid;
-  gap: 1.75rem;
-  padding: calc(var(--header-h) + 3rem) 0 4rem;
-  animation: rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  min-height: 100svh;
+  background: var(--panel);
 }
 
-.landing-intro {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 1.25rem 1.75rem;
-}
-
-.landing-intro h1 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(3.4rem, 10vw, 6.75rem);
-  line-height: 0.9;
-  letter-spacing: -0.045em;
-  max-width: 8ch;
-  flex: 1 1 14rem;
-}
-
-.landing-portrait {
-  width: 5.5rem;
-  height: 5.5rem;
-  flex: 0 0 auto;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--paper-2) 22%, transparent);
-  opacity: 0.92;
-  animation: fade 1s ease 0.15s both;
-}
-
-@media (min-width: 700px) {
-  .landing-portrait {
-    width: 6.75rem;
-    height: 6.75rem;
+@media (min-width: 960px) {
+  .landing {
+    grid-template-columns: minmax(22rem, 0.92fr) minmax(0, 1.08fr);
   }
 }
 
-.landing-portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 18%;
+.landing-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.35rem;
+  padding: calc(var(--header-h) + 2.75rem) 1.5rem 3rem;
+  color: var(--panel-text);
+  background:
+    radial-gradient(ellipse 90% 70% at 0% 100%, rgba(226, 59, 30, 0.28), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 0%, rgba(80, 160, 130, 0.18), transparent 50%),
+    var(--panel);
+  overflow: hidden;
+  animation: panel-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.landing-inner .lede {
+@media (min-width: 960px) {
+  .landing-panel {
+    padding: calc(var(--header-h) + 2rem) 3.25rem 3.5rem 2.75rem;
+  }
+}
+
+.landing-panel::before {
+  content: 'CS';
+  position: absolute;
+  right: -0.1em;
+  bottom: -0.18em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(8rem, 28vw, 18rem);
+  line-height: 0.75;
+  letter-spacing: -0.08em;
+  color: color-mix(in srgb, var(--panel-text) 6%, transparent);
+  pointer-events: none;
+  user-select: none;
+}
+
+.landing-meta {
   margin: 0;
-  max-width: 32rem;
-  color: color-mix(in srgb, var(--paper-2) 78%, transparent);
-  font-size: clamp(1.15rem, 2vw, 1.35rem);
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--panel-text) 65%, #7dceb0);
+  animation: rise 0.7s ease 0.05s both;
+}
+
+.landing-panel h1 {
+  margin: 0;
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(3.6rem, 11vw, 6.8rem);
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  max-width: 8ch;
+  animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+.landing-panel .lede {
+  margin: 0;
+  position: relative;
+  max-width: 30rem;
+  color: color-mix(in srgb, var(--panel-text) 78%, transparent);
+  font-size: clamp(1.15rem, 2.1vw, 1.4rem);
+  animation: rise 0.8s ease 0.14s both;
+}
+
+.landing-panel .cta-row {
+  position: relative;
+  animation: rise 0.8s ease 0.2s both;
+}
+
+.landing-stage {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 42vh;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background: #070b09;
+  animation: stage-in 1s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+@media (min-width: 960px) {
+  .landing-stage {
+    min-height: 100%;
+  }
+}
+
+.landing-stage img {
+  width: 100%;
+  height: 100%;
+  min-height: 38vh;
+  object-fit: cover;
+  object-position: top center;
+  transform: scale(1.06);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: settle 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (min-width: 960px) {
+  .landing-stage img {
+    min-height: 100%;
+    height: 100%;
+  }
+}
+
+.landing-stage:hover img {
+  transform: scale(1.1);
+}
+
+.landing-stage-caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  font-family: var(--font-display);
+  background: #091612;
+  color: #fff;
+  border-top: 1px solid color-mix(in srgb, #fff 12%, transparent);
+}
+
+.landing-stage-caption span {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  font-weight: 700;
+}
+
+.landing-stage-caption strong {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.landing .btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.landing .btn-ghost {
+  border-color: color-mix(in srgb, var(--panel-text) 35%, transparent);
+  color: var(--panel-text);
+}
+
+.landing .btn-ghost:hover {
+  border-color: var(--panel-text);
+  color: #fff;
+  background: color-mix(in srgb, #fff 6%, transparent);
 }
 
 /* ——— CTAs ——— */
@@ -235,11 +350,11 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  padding: 0.85rem 1.25rem;
+  padding: 0.95rem 1.4rem;
   border-radius: var(--radius);
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.92rem;
+  font-weight: 800;
+  font-size: 0.95rem;
   letter-spacing: 0.01em;
   text-decoration: none;
   transition:
@@ -733,12 +848,34 @@ a:hover {
 
 @keyframes settle {
   from {
-    opacity: 0.4;
-    transform: scale(1.08);
+    opacity: 0.35;
+    transform: scale(1.12);
   }
   to {
     opacity: 1;
-    transform: scale(1.04);
+    transform: scale(1.06);
+  }
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes stage-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
