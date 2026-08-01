@@ -5,12 +5,14 @@ interface Props {
   title: string;
   description?: string;
   path?: string;
+  home?: boolean;
 }
 
 const {
   title,
-  description = 'Portfolio de Camila Sabino — software engineer, producto y proyectos como Blendify.',
+  description = 'Camila Sabino — software engineer en Buenos Aires. Sistemas de producto, APIs y proyectos como Blendify.',
   path = '/',
+  home = false,
 } = Astro.props;
 
 const site = 'https://camilasabino.dev';
@@ -31,25 +33,19 @@ const canonical = new URL(path, site).toString();
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es" />
+    <meta property="og:image" content={`${site}/images/camila.jpg`} />
     <title>{title}</title>
   </head>
-  <body>
-    <div class="shell">
-      <header class="site-header">
+  <body class={home ? 'page-home' : undefined}>
+    <div class={home ? undefined : 'shell'}>
+      <header class:list={['site-header', home && 'shell']}>
         <a class="brand" href="/">Camila Sabino</a>
         <nav class="nav" aria-label="Principal">
-          <a href="/#proyectos" aria-current={path.startsWith('/projects') ? 'page' : undefined}>
-            Proyectos
-          </a>
-          <a href="/sobre" aria-current={path === '/sobre' ? 'page' : undefined}>Sobre</a>
-          <a
-            href="https://www.linkedin.com/in/camilasabino/"
-            rel="noopener noreferrer"
-            target="_blank">LinkedIn</a
+          <a href="/#proyectos" aria-current={path.startsWith('/projects') ? 'page' : undefined}
+            >Trabajo</a
           >
-          <a href="https://github.com/camilasabino" rel="noopener noreferrer" target="_blank">
-            GitHub
-          </a>
+          <a href="/sobre" aria-current={path === '/sobre' ? 'page' : undefined}>Sobre</a>
+          <a href="mailto:contacto@camilasabino.dev">Contacto</a>
         </nav>
       </header>
 
@@ -57,22 +53,32 @@ const canonical = new URL(path, site).toString();
         <slot />
       </main>
 
-      <footer class="site-footer">
-        <span>© {new Date().getFullYear()} Camila Sabino</span>
-        <span>
-          <a href="mailto:contacto@camilasabino.dev">contacto@camilasabino.dev</a>
-          ·
-          <a
-            href="https://www.linkedin.com/in/camilasabino/"
-            rel="noopener noreferrer"
-            target="_blank">LinkedIn</a
-          >
-          ·
-          <a href="https://github.com/camilasabino" rel="noopener noreferrer" target="_blank"
-            >GitHub</a
-          >
-        </span>
-      </footer>
+      {
+        !home && (
+          <footer class="site-footer">
+            <span>© {new Date().getFullYear()} Camila Sabino</span>
+            <span>
+              <a href="mailto:contacto@camilasabino.dev">contacto@camilasabino.dev</a>
+              ·
+              <a
+                href="https://www.linkedin.com/in/camilasabino/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                LinkedIn
+              </a>
+              ·
+              <a
+                href="https://github.com/camilasabino"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                GitHub
+              </a>
+            </span>
+          </footer>
+        )
+      }
     </div>
   </body>
 </html>
