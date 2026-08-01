@@ -26,19 +26,16 @@ Guía para dejar el portfolio en línea. Hosting Pages = **gratis**. Único cost
 
 ## 3. Conectar este repo a Cloudflare Pages
 
-### 3.1 Publicar el código en GitHub
+### 3.1 Código en GitHub (ya listo)
 
-El repo esperado es `camilasabino/camilasabino.dev` (público o privado). Si aún no existe, desde esta carpeta:
-
-```bash
-gh repo create camilasabino/camilasabino.dev --public --source=. --remote=origin --push
-```
+Repo: [github.com/camilasabino/camilasabino.dev](https://github.com/camilasabino/camilasabino.dev)  
+Branch de producción: `main`
 
 ### 3.2 Crear el proyecto Pages
 
 1. Dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
-2. Autorizá GitHub si te lo pide.
-3. Elegí el repo `camilasabino.dev`.
+2. Autorizá GitHub si te lo pide (permiso al repo `camilasabino.dev`).
+3. Elegí el repo `camilasabino.dev` / branch `main`.
 4. Build settings:
 
 | Campo | Valor |
@@ -47,10 +44,10 @@ gh repo create camilasabino/camilasabino.dev --public --source=. --remote=origin
 | Build command | `npm run build` |
 | Build output directory | `dist` |
 | Root directory | `/` (default) |
-| Node version | `22` (o la que ofrezca Pages ≥ 22) |
+| Environment variable | `NODE_VERSION` = `22` |
 
 5. **Save and Deploy**. Esperá el primer build.
-6. Vas a recibir una URL temporal tipo `https://camilasabino-dev.pages.dev`.
+6. Vas a recibir una URL temporal tipo `https://camilasabino-dev.pages.dev` (podés compartirla antes de comprar el dominio).
 
 ### 3.3 Dominio custom + SSL
 
