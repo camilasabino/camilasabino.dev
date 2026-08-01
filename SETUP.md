@@ -40,11 +40,12 @@ Branch de producción: `main`
 
 | Campo | Valor |
 |---|---|
-| Framework preset | Astro |
+| Framework preset | Astro (si aparece) |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
-| Root directory | `/` (default) |
+| Deploy command | `npx wrangler deploy` |
 | Environment variable | `NODE_VERSION` = `22` |
+
+El repo incluye `wrangler.json` apuntando a `./dist` (sitio estático).
 
 5. **Save and Deploy**. Esperá el primer build.
 6. Vas a recibir una URL temporal tipo `https://camilasabino-dev.pages.dev` (podés compartirla antes de comprar el dominio).
