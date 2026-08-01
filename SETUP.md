@@ -70,15 +70,15 @@ Cada push a `main` vuelve a deployar solo.
 
 ## 4. Email Routing (opcional, gratis)
 
-Para recibir mail en `hola@camilasabino.dev` sin pagar un buzón:
+Para recibir mail en `contacto@camilasabino.dev` sin pagar un buzón:
 
 1. Entrá a la zona del dominio → **Email** → **Email Routing**.
 2. **Get started** / activá Email Routing.
 3. Destino: tu Gmail (u otro inbox personal).
-4. Creá la dirección `hola@camilasabino.dev` → forward al destino.
+4. Creá la dirección `contacto@camilasabino.dev` → forward al destino.
 5. Confirmá el email de verificación que manda Cloudflare.
 
-El footer del sitio ya apunta a `hola@camilasabino.dev`.
+El footer del sitio ya apunta a `contacto@camilasabino.dev`.
 
 ---
 
