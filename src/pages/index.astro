@@ -4,8 +4,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="Camila Sabino" path="/" home>
   <section class="landing">
-    <div class="landing-copy">
-      <h1>Camila Sabino</h1>
+    <div class="landing-inner">
+      <div class="landing-intro">
+        <h1>Camila Sabino</h1>
+        <div class="landing-portrait">
+          <img
+            src="/images/camila.jpg"
+            alt="Camila Sabino"
+            width="216"
+            height="216"
+            fetchpriority="high"
+          />
+        </div>
+      </div>
       <p class="lede">
         Construyo software de producto que escala: pagos, APIs y sistemas distribuidos — de punta a
         punta.
@@ -14,15 +25,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <a class="btn btn-primary" href="/#proyectos">Ver trabajo</a>
         <a class="btn btn-ghost" href="/sobre">Conocerme</a>
       </div>
-    </div>
-    <div class="landing-visual" aria-hidden="true">
-      <img
-        src="/images/camila.jpg"
-        alt=""
-        width="900"
-        height="1125"
-        fetchpriority="high"
-      />
     </div>
   </section>
 
