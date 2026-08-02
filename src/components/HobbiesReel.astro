@@ -1,0 +1,204 @@
+---
+interface Slide {
+  src: string;
+  alt: string;
+  caption: string;
+  tag: string;
+}
+
+interface Props {
+  title: string;
+  lede: string;
+  tags: readonly string[];
+  slides: readonly Slide[];
+  prevLabel: string;
+  nextLabel: string;
+  pauseLabel: string;
+  playLabel: string;
+}
+
+const { title, lede, tags, slides, prevLabel, nextLabel, pauseLabel, playLabel } = Astro.props;
+---
+
+<section class="hobbies" aria-labelledby="hobbies-heading">
+  <div class="hobbies-copy">
+    <h2 id="hobbies-heading">{title}</h2>
+    <p class="lede">{lede}</p>
+    <ul class="hobbies-tags">
+      {tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+  </div>
+
+  <div
+    class="hobbies-reel"
+    data-hobbies-reel
+    data-pause-label={pauseLabel}
+    data-play-label={playLabel}
+  >
+    <div class="hobbies-stage">
+      {
+        slides.map((slide, index) => (
+          <figure
+            class:list={['hobbies-slide', index === 0 && 'is-active']}
+            data-slide
+            data-index={index}
+            aria-hidden={index !== 0}
+          >
+            <img
+              src={slide.src}
+              alt={slide.alt}
+              width="900"
+              height="1200"
+              loading={index === 0 ? 'eager' : 'lazy'}
+            />
+            <figcaption>
+              <span class="hobbies-slide-tag">{slide.tag}</span>
+              <span class="hobbies-slide-caption">{slide.caption}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
+
+      <div class="hobbies-controls">
+        <button type="button" class="hobbies-nav" data-prev aria-label={prevLabel}>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M15 6 9 12l6 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </button>
+        <button type="button" class="hobbies-nav" data-toggle-play aria-label={pauseLabel}>
+          <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+            <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+          </svg>
+          <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden>
+            <path d="M8 5.5v13l11-6.5L8 5.5Z"></path>
+          </svg>
+        </button>
+        <button type="button" class="hobbies-nav" data-next aria-label={nextLabel}>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="m9 6 6 6-6 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="hobbies-thumbs" role="tablist" aria-label={title}>
+      {
+        slides.map((slide, index) => (
+          <button
+            type="button"
+            class:list={['hobbies-thumb', index === 0 && 'is-active']}
+            role="tab"
+            aria-selected={index === 0}
+            data-thumb={index}
+            aria-label={`${index + 1}. ${slide.caption}`}
+          >
+            <img src={slide.src} alt="" width="120" height="160" loading="lazy" />
+            <span class="hobbies-progress" aria-hidden="true"></span>
+          </button>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  function initHobbiesReel(root: HTMLElement) {
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('[data-slide]'));
+    const thumbs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-thumb]'));
+    const prev = root.querySelector<HTMLButtonElement>('[data-prev]');
+    const next = root.querySelector<HTMLButtonElement>('[data-next]');
+    const toggle = root.querySelector<HTMLButtonElement>('[data-toggle-play]');
+    const pauseIcon = toggle?.querySelector<SVGElement>('.icon-pause');
+    const playIcon = toggle?.querySelector<SVGElement>('.icon-play');
+    const pauseLabel = root.dataset.pauseLabel ?? 'Pause';
+    const playLabel = root.dataset.playLabel ?? 'Play';
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let index = 0;
+    let playing = !reduceMotion;
+    let timer: number | undefined;
+    const intervalMs = 4200;
+
+    function setPlaying(nextPlaying: boolean) {
+      playing = nextPlaying;
+      if (toggle) {
+        toggle.setAttribute('aria-label', playing ? pauseLabel : playLabel);
+      }
+      if (pauseIcon) pauseIcon.hidden = !playing;
+      if (playIcon) playIcon.hidden = playing;
+      root.classList.toggle('is-paused', !playing);
+      restartTimer();
+    }
+
+    function show(nextIndex: number) {
+      index = (nextIndex + slides.length) % slides.length;
+
+      slides.forEach((slide, i) => {
+        const active = i === index;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+
+      thumbs.forEach((thumb, i) => {
+        const active = i === index;
+        thumb.classList.toggle('is-active', active);
+        thumb.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+
+      restartTimer();
+    }
+
+    function restartTimer() {
+      window.clearTimeout(timer);
+      if (!playing) return;
+      timer = window.setTimeout(() => show(index + 1), intervalMs);
+    }
+
+    prev?.addEventListener('click', () => {
+      show(index - 1);
+      setPlaying(false);
+    });
+    next?.addEventListener('click', () => {
+      show(index + 1);
+      setPlaying(false);
+    });
+    toggle?.addEventListener('click', () => setPlaying(!playing));
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const i = Number(thumb.dataset.thumb);
+        if (Number.isFinite(i)) {
+          show(i);
+          setPlaying(false);
+        }
+      });
+    });
+
+    root.addEventListener('mouseenter', () => {
+      if (playing) window.clearTimeout(timer);
+    });
+    root.addEventListener('mouseleave', () => {
+      if (playing) restartTimer();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) window.clearTimeout(timer);
+      else if (playing) restartTimer();
+    });
+
+    setPlaying(playing);
+    show(0);
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-hobbies-reel]').forEach(initHobbiesReel);
+</script>

@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SocialLinks from './SocialLinks.astro';
+import HobbiesReel from './HobbiesReel.astro';
+import { getLocalizedPath, type Lang } from '../i18n';
+import { about, stackItems } from '../i18n/content';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'es' } = Astro.props;
+const copy = about[lang];
+const path = getLocalizedPath('about', lang);
+---
+
+<BaseLayout title={copy.title} description={copy.description} path={path} lang={lang}>
+  <header class="about-top">
+    <div>
+      <h1>{copy.headline}</h1>
+      <p class="lede">{copy.lede}</p>
+    </div>
+    <div class="about-photo-wrap">
+      <img src="/images/camila.jpg" alt="Camila Sabino" width="900" height="1125" />
+    </div>
+  </header>
+
+  <div class="band">
+    <div class="band-inner">
+      <div class="cta-row band-actions">
+        <a class="btn btn-primary" href={copy.cvHref} download={copy.cvDownload}>
+          {copy.downloadCv}
+        </a>
+        <SocialLinks class="band-socials" />
+      </div>
+    </div>
+  </div>
+
+  <section class="timeline">
+    <h2>{copy.experience}</h2>
+
+    <article class="job">
+      <p class="job-when">{copy.job1When}</p>
+      <div>
+        <h3>{copy.job1Title}</h3>
+        <p class="role-place">{copy.job1Place}</p>
+        <p>{copy.job1Summary}</p>
+        <ul>
+          {copy.job1Bullets.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </article>
+
+    <article class="job">
+      <p class="job-when">{copy.job2When}</p>
+      <div>
+        <h3>{copy.job2Title}</h3>
+        <p class="role-place">{copy.job2Place}</p>
+        <p>{copy.job2Summary}</p>
+      </div>
+    </article>
+  </section>
+
+  <HobbiesReel
+    title={copy.hobbiesTitle}
+    lede={copy.hobbiesLede}
+    tags={copy.hobbiesTags}
+    slides={copy.hobbySlides}
+    prevLabel={copy.hobbiesPrev}
+    nextLabel={copy.hobbiesNext}
+    pauseLabel={copy.hobbiesPause}
+    playLabel={copy.hobbiesPlay}
+  />
+
+  <section class="split-meta">
+    <div>
+      <h2>{copy.education}</h2>
+      <ul class="plain-list">
+        <li>
+          <strong>{copy.edu1Title}</strong>
+          <span>{copy.edu1Meta}</span>
+        </li>
+        <li>
+          <strong>{copy.edu2Title}</strong>
+          <span>{copy.edu2Meta}</span>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2>{copy.languagesTitle}</h2>
+      <ul class="plain-list">
+        <li>
+          <strong>{copy.lang1}</strong>
+          <span>{copy.lang1Level}</span>
+        </li>
+        <li>
+          <strong>{copy.lang2}</strong>
+          <span>{copy.lang2Level}</span>
+        </li>
+        <li>
+          <strong>{copy.lang3}</strong>
+          <span>{copy.lang3Level}</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="split-meta">
+    <div>
+      <h2>{copy.howIWork}</h2>
+      <ul class="stack">
+        {copy.skills.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+    <div>
+      <h2>{copy.stackTitle}</h2>
+      <ul class="stack">
+        {stackItems.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

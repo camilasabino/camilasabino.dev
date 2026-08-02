@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLocalizedPath, type Lang } from '../i18n';
+import { blendify } from '../i18n/content';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'es' } = Astro.props;
+const copy = blendify[lang];
+const path = getLocalizedPath('blendify', lang);
+const workHref = getLocalizedPath('work', lang);
+---
+
+<BaseLayout title={copy.title} description={copy.description} path={path} lang={lang}>
+  <article>
+    <header class="project-hero">
+      <div class="kicker">
+        <img src="/projects/blendify/mark.svg" alt="" width="32" height="32" />
+        {copy.kicker}
+      </div>
+      <h1>Blendify</h1>
+      <p class="lede">{copy.lede}</p>
+      <div class="cta-row">
+        <a
+          class="btn btn-primary"
+          href="https://github.com/camilasabino/Blendify"
+          rel="noopener noreferrer"
+          target="_blank">{copy.github}</a
+        >
+        <a class="btn btn-ghost" href={workHref}>{copy.moreWork}</a>
+      </div>
+    </header>
+
+    <div class="bleed">
+      <img
+        src="/projects/blendify/landing.webp"
+        alt={copy.landingAlt}
+        width="1920"
+        height="1080"
+      />
+    </div>
+
+    <div class="prose">
+      <h2>{copy.ideaTitle}</h2>
+      <p>{copy.ideaBody}</p>
+
+      <h2>{copy.stackTitle}</h2>
+      <ul class="stack">
+        <li>TypeScript</li>
+        <li>React 19 + Vite</li>
+        <li>NestJS 11</li>
+        <li>PostgreSQL</li>
+        <li>Redis</li>
+        <li>Spotify</li>
+        <li>Last.fm</li>
+      </ul>
+
+      <h2>{copy.includesTitle}</h2>
+      <ul>
+        {copy.includes.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <h2>{copy.shotsTitle}</h2>
+      <div class="gallery">
+        <figure>
+          <img
+            src="/projects/blendify/mix-artists.webp"
+            alt={copy.mixAlt}
+            width="1280"
+            height="720"
+          />
+          <figcaption>Artist Mix</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="/projects/blendify/library.webp"
+            alt={copy.libraryAlt}
+            width="1280"
+            height="720"
+          />
+          <figcaption>Library</figcaption>
+        </figure>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

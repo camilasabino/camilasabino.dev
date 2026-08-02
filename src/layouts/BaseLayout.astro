@@ -1,54 +1,132 @@
 ---
 import '../styles/global.css';
+import SocialLinks from '../components/SocialLinks.astro';
+import {
+  getAlternatePath,
+  getLocalizedPath,
+  getRouteKey,
+  type Lang,
+} from '../i18n';
+import { ui } from '../i18n/content';
 
 interface Props {
   title: string;
   description?: string;
-  path?: string;
+  path: string;
+  lang?: Lang;
   home?: boolean;
 }
 
 const {
   title,
-  description = 'Camila Sabino — software engineer en Buenos Aires. Sistemas de producto, APIs y proyectos como Blendify.',
-  path = '/',
+  path,
+  lang = 'es',
   home = false,
 } = Astro.props;
 
+const copy = ui[lang];
+const description = Astro.props.description ?? copy.defaultDescription;
 const site = 'https://camilasabino.dev';
 const canonical = new URL(path, site).toString();
+const routeKey = getRouteKey(path);
+const alternatePath = getAlternatePath(path);
+const homeHref = getLocalizedPath('home', lang);
+const workHref = getLocalizedPath('work', lang);
+const aboutHref = getLocalizedPath('about', lang);
+const contactHref = getLocalizedPath('contact', lang);
+const esHref = getLocalizedPath(routeKey, 'es');
+const enHref = getLocalizedPath(routeKey, 'en');
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang} data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="dark light" />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="es" href={new URL(esHref, site).toString()} />
+    <link rel="alternate" hreflang="en" href={new URL(enHref, site).toString()} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="es" />
+    <meta property="og:locale" content={lang === 'es' ? 'es' : 'en_US'} />
     <meta property="og:image" content={`${site}/images/camila.jpg`} />
     <title>{title}</title>
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          document.documentElement.setAttribute(
+            'data-theme',
+            stored === 'light' ? 'light' : 'dark',
+          );
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
   </head>
   <body class={home ? 'page-home' : undefined}>
-    <div class={home ? undefined : 'shell'}>
-      <header class:list={['site-header', home && 'shell']}>
-        <a class="brand" href="/">Camila Sabino</a>
-        <nav class="nav" aria-label="Principal">
-          <a href="/#proyectos" aria-current={path.startsWith('/projects') ? 'page' : undefined}
-            >Trabajo</a
+    <header class="site-header">
+      <div class="site-header-bar shell">
+        <a class="brand" href={homeHref}>Camila Sabino</a>
+        <nav class="nav" aria-label={copy.navAria}>
+          <a
+            href={workHref}
+            aria-current={path.includes('blendify') || path.includes('projects')
+              ? 'page'
+              : undefined}>{copy.navWork}</a
           >
-          <a href="/sobre" aria-current={path === '/sobre' ? 'page' : undefined}>Sobre</a>
-          <a href="mailto:contacto@camilasabino.dev">Contacto</a>
+          <a
+            href={aboutHref}
+            aria-current={path.includes('sobre') || path.includes('about') ? 'page' : undefined}
+            >{copy.navAbout}</a
+          >
+          <a
+            href={contactHref}
+            aria-current={path.includes('contacto') || path.endsWith('/contact') || path.endsWith('/contact/')
+              ? 'page'
+              : undefined}>{copy.navContact}</a
+          >
+          <a class="lang-toggle" href={alternatePath} aria-label={copy.langSwitchAria}>
+            <span class="lang-flag" aria-hidden="true">{lang === 'es' ? '🇬🇧' : '🇪🇸'}</span>
+            <span>{copy.langSwitch}</span>
+          </a>
+          <button
+            type="button"
+            class="theme-toggle"
+            data-theme-toggle
+            data-label-to-light={copy.themeToLight}
+            data-label-to-dark={copy.themeToDark}
+            aria-label={copy.themeToggle}
+            title={copy.themeToggle}
+          >
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M20 14.5A7.5 7.5 0 1 1 9.5 4 6 6 0 0 0 20 14.5Z"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"></path>
+            </svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"></circle>
+              <path
+                d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M18.9 5.1l-1.6 1.6M6.7 17.3l-1.6 1.6"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"></path>
+            </svg>
+          </button>
         </nav>
-      </header>
+      </div>
+    </header>
 
+    <div class={home ? undefined : 'shell page-shell'}>
       <main>
         <slot />
       </main>
@@ -57,28 +135,41 @@ const canonical = new URL(path, site).toString();
         !home && (
           <footer class="site-footer">
             <span>© {new Date().getFullYear()} Camila Sabino</span>
-            <span>
-              <a href="mailto:contacto@camilasabino.dev">contacto@camilasabino.dev</a>
-              ·
-              <a
-                href="https://www.linkedin.com/in/camilasabino/"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                LinkedIn
-              </a>
-              ·
-              <a
-                href="https://github.com/camilasabino"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                GitHub
-              </a>
-            </span>
+            <SocialLinks compact />
           </footer>
         )
       }
     </div>
+
+    <script>
+      function currentTheme() {
+        return document.documentElement.getAttribute('data-theme') === 'light'
+          ? 'light'
+          : 'dark';
+      }
+
+      function setTheme(theme: 'light' | 'dark') {
+        document.documentElement.setAttribute('data-theme', theme);
+        try {
+          localStorage.setItem('theme', theme);
+        } catch {
+          /* ignore */
+        }
+        for (const button of document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')) {
+          const toLight = button.dataset.labelToLight ?? 'Switch to light mode';
+          const toDark = button.dataset.labelToDark ?? 'Switch to dark mode';
+          button.setAttribute('aria-label', theme === 'dark' ? toLight : toDark);
+        }
+      }
+
+      function toggleTheme() {
+        setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+      }
+
+      setTheme(currentTheme());
+      for (const button of document.querySelectorAll('[data-theme-toggle]')) {
+        button.addEventListener('click', toggleTheme);
+      }
+    </script>
   </body>
 </html>

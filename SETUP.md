@@ -82,6 +82,26 @@ El footer del sitio ya apunta a `contacto@camilasabino.dev`.
 
 ---
 
+## 4b. Formulario de contacto (Web3Forms, gratis)
+
+El sitio tiene `/contacto`: el formulario envía un mail sin abrir Gmail. También hay un enlace
+“Abrir cliente de correo” (`mailto:`) por si la persona prefiere su app.
+
+1. Creá una cuenta gratis en [web3forms.com](https://web3forms.com).
+2. Generá un **Access Key** apuntando al inbox donde querés recibir (p.ej. Outlook o el forward de `contacto@`).
+3. En local, copiá `.env.example` → `.env` y pegá la key:
+
+```bash
+cp .env.example .env
+# PUBLIC_WEB3FORMS_ACCESS_KEY=tu_key_aqui
+```
+
+4. Reiniciá `npm run dev`.
+5. En Cloudflare Pages (cuando subas a prod): **Settings → Environment variables** →
+   `PUBLIC_WEB3FORMS_ACCESS_KEY` = la misma key.
+
+---
+
 ## 5. Evolución (más adelante)
 
 Cuando quieras Blendify **en vivo**:

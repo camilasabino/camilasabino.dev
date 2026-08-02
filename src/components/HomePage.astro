@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SocialLinks from './SocialLinks.astro';
+import { getLocalizedPath, type Lang } from '../i18n';
+import { home } from '../i18n/content';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'es' } = Astro.props;
+const copy = home[lang];
+const path = getLocalizedPath('home', lang);
+const aboutHref = getLocalizedPath('about', lang);
+const workHref = getLocalizedPath('work', lang);
+const blendifyHref = getLocalizedPath('blendify', lang);
+---
+
+<BaseLayout title={copy.title} path={path} lang={lang} home>
+  <section class="landing">
+    <div class="landing-bg" aria-hidden="true">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+      <span class="blob blob-c"></span>
+      <span class="grid-fade"></span>
+    </div>
+
+    <div class="landing-frame">
+      <div class="landing-copy">
+        <p class="landing-meta">{copy.meta}</p>
+        <h1>{copy.title}</h1>
+        <p class="lede">{copy.lede}</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href={workHref}>{copy.ctaWork}</a>
+          <a class="btn btn-ghost" href={aboutHref}>{copy.ctaAbout}</a>
+        </div>
+        <SocialLinks />
+      </div>
+
+      <figure class="landing-photo">
+        <img
+          src="/images/camila.jpg"
+          alt="Camila Sabino"
+          width="720"
+          height="900"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <div class="shell page-shell">
+    <section class="section" id={copy.workId}>
+      <div class="section-head">
+        <h2>{copy.workTitle}</h2>
+        <p>{copy.workSubtitle}</p>
+      </div>
+
+      <a class="project-feature" href={blendifyHref}>
+        <div class="project-feature-media">
+          <img
+            src="/projects/blendify/landing.webp"
+            alt={copy.blendifyAlt}
+            width="1280"
+            height="800"
+          />
+        </div>
+        <div class="project-feature-body">
+          <span class="label">{copy.blendifyLabel}</span>
+          <h3 class="project-feature-title">Blendify</h3>
+          <p>{copy.blendifyBlurb}</p>
+          <span class="more">{copy.blendifyMore}</span>
+        </div>
+      </a>
+    </section>
+
+    <footer class="site-footer">
+      <span>© {new Date().getFullYear()} {copy.footerLine}</span>
+      <SocialLinks compact />
+    </footer>
+  </div>
+</BaseLayout>
